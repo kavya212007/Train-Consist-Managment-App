@@ -1,67 +1,78 @@
+import java.util.Arrays;
+
 /*
  * ============================================================
- * MAIN CLASS – UseCase16TrainConsistMgmt
+ * MAIN CLASS – UseCase19TrainConsistMgmt
  * ============================================================
  *
- * Use Case 16: Sort Passenger Bogies by Capacity
+ * Use Case 19: Binary Search for Bogie ID
  *
  * Description:
- * This class demonstrates manual sorting of passenger
- * bogie capacities using the Bubble Sort algorithm
- * instead of built-in sorting utilities.
+ * This class demonstrates searching for a specific bogie ID
+ * using the Binary Search algorithm on sorted data.
  *
  * At this stage, the application:
- * - Creates an array of capacities
- * - Compares adjacent values
- * - Swaps values when required
- * - Repeats passes until sorted
- * - Displays sorted result
+ * - Creates sorted bogie ID array
+ * - Defines search key
+ * - Applies binary search logic
+ * - Narrows search range each iteration
+ * - Displays result
  *
- * This maps algorithmic sorting logic using Bubble Sort.
+ * This maps optimized searching logic using divide-and-conquer.
  *
  * @author Developer
- * @version 16.0
+ * @version 19.0
  */
 
-public class UseCase16TrainConsistMgmt {
+public class UseCase19TrainConsistMgmt {
 
     public static void main(String[] args) {
 
-        System.out.println("==========================================");
-        System.out.println(" UC16 - Manual Sorting using Bubble Sort ");
-        System.out.println("==========================================\n");
+        System.out.println("==================================================");
+        System.out.println(" UC19 - Binary Search for Bogie ID ");
+        System.out.println("==================================================\n");
 
-        // Create array of passenger bogie capacities
-        int[] capacities = {72, 56, 24, 70, 60};
+        // Create sorted array of bogie IDs
+        String[] bogieIds = {"BG101", "BG205", "BG300", "BG412", "BG550"};
 
-        // Display original order
-        System.out.println("Original Capacities:");
-        for (int c : capacities) {
-            System.out.print(c + " ");
+        // Ensure data is sorted before binary search (precondition)
+        Arrays.sort(bogieIds);
+
+        // Search key
+        String key = "BG300";
+
+        // Display available bogies
+        System.out.println("Sorted Bogie IDs:");
+        for (String id : bogieIds) {
+            System.out.print(id + " ");
         }
 
-        // ----- BUBBLE SORT LOGIC -----
-        // Outer loop controls number of passes
-        for (int i = 0; i < capacities.length - 1; i++) {
+        // ----- BINARY SEARCH LOGIC -----
+        int low = 0;
+        int high = bogieIds.length - 1;
+        boolean found = false;
 
-            // Inner loop for comparison
-            for (int j = 0; j < capacities.length - i - 1; j++) {
+        while (low <= high) {
 
-                // Compare adjacent elements
-                if (capacities[j] > capacities[j + 1]) {
+            int mid = (low + high) / 2;
 
-                    // Swap if required
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
+            int comparison = bogieIds[mid].compareTo(key);
+
+            if (comparison == 0) {
+                System.out.println("\n\nBogie ID '" + key + "' found at index: " + mid);
+                found = true;
+                break;
+            }
+            else if (comparison < 0) {
+                low = mid + 1;   // Search right half
+            }
+            else {
+                high = mid - 1;  // Search left half
             }
         }
 
-        // Display sorted result
-        System.out.println("\n\nSorted Capacities (Ascending):");
-        for (int c : capacities) {
-            System.out.print(c + " ");
+        if (!found) {
+            System.out.println("\n\nBogie ID '" + key + "' not found.");
         }
     }
 }
