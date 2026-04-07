@@ -1,67 +1,61 @@
-/*
- * ============================================================
- * MAIN CLASS – UseCase16TrainConsistMgmt
- * ============================================================
- *
- * Use Case 16: Sort Passenger Bogies by Capacity
- *
- * Description:
- * This class demonstrates manual sorting of passenger
- * bogie capacities using the Bubble Sort algorithm
- * instead of built-in sorting utilities.
- *
- * At this stage, the application:
- * - Creates an array of capacities
- * - Compares adjacent values
- * - Swaps values when required
- * - Repeats passes until sorted
- * - Displays sorted result
- *
- * This maps algorithmic sorting logic using Bubble Sort.
- *
- * @author Developer
- * @version 16.0
+/**
+ * ======================================================================
+ * MAIN CLASS - UseCase20TrainConsistMgmnt
+ * ======================================================================
+ * * Use Case 20: Exception Handling During Search Operations
+ * * Description:
+ * This class prevents searching when no bogies exist
+ * by applying fail-fast validation using exceptions.
+ * * At this stage, the application:
+ * - Creates bogie collection
+ * - Validates system state
+ * - Throws exception if empty
+ * - Stops invalid search operation
+ * - Displays meaningful message
+ * * This maps defensive programming using runtime exceptions.
+ * * @author Developer
+ * @version 20.0
  */
-
-public class UseCase16TrainConsistMgmt {
+public class UseCase20TrainConsistMgmnt {
 
     public static void main(String[] args) {
 
-        System.out.println("==========================================");
-        System.out.println(" UC16 - Manual Sorting using Bubble Sort ");
-        System.out.println("==========================================\n");
+        // Create bogie array (empty train scenario)
+        String[] bogieIds = {};
 
-        // Create array of passenger bogie capacities
-        int[] capacities = {72, 56, 24, 70, 60};
+        // Search key
+        String searchId = "BG101";
 
-        // Display original order
-        System.out.println("Original Capacities:");
-        for (int c : capacities) {
-            System.out.print(c + " ");
-        }
+        try {
+            // ---- FAIL-FAST VALIDATION ----
+            // Check if train has bogies before performing search
+            if (bogieIds.length == 0) {
+                throw new IllegalStateException("SYSTEM ERROR: Cannot perform search on an empty train consist.");
+            }
 
-        // ----- BUBBLE SORT LOGIC -----
-        // Outer loop controls number of passes
-        for (int i = 0; i < capacities.length - 1; i++) {
+            // ---- SEARCH LOGIC (executes only if data exists) ----
+            boolean found = false;
 
-            // Inner loop for comparison
-            for (int j = 0; j < capacities.length - i - 1; j++) {
-
-                // Compare adjacent elements
-                if (capacities[j] > capacities[j + 1]) {
-
-                    // Swap if required
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
+            for (String id : bogieIds) {
+                if (id.equalsIgnoreCase(searchId)) {
+                    found = true;
+                    break;
                 }
             }
+
+            // Display result
+            if (found) {
+                System.out.println("SUCCESS: Bogie " + searchId + " found in the consist.");
+            } else {
+                System.out.println("NOT FOUND: Bogie " + searchId + " is not part of this train.");
+            }
+
+        } catch (IllegalStateException e) {
+            // Capturing the fail-fast exception
+            System.err.println("VALIDATION FAILED: " + e.getMessage());
+            System.err.println("REASON: Search operation aborted to prevent Null or Empty pointer logic.");
         }
 
-        // Display sorted result
-        System.out.println("\n\nSorted Capacities (Ascending):");
-        for (int c : capacities) {
-            System.out.print(c + " ");
-        }
+        System.out.println("\nUC20 execution completed...");
     }
 }
