@@ -1,67 +1,59 @@
+import java.util.Arrays;
+
 /*
  * ============================================================
- * MAIN CLASS – UseCase16TrainConsistMgmt
+ * MAIN CLASS – UseCase18TrainConsistMgmt
  * ============================================================
  *
- * Use Case 16: Sort Passenger Bogies by Capacity
+ * Use Case 18: Search Bogie Name Using Binary Search
  *
  * Description:
- * This class demonstrates manual sorting of passenger
- * bogie capacities using the Bubble Sort algorithm
- * instead of built-in sorting utilities.
+ * This class demonstrates searching for a bogie name
+ * using Java’s built-in Arrays.binarySearch() method.
  *
  * At this stage, the application:
- * - Creates an array of capacities
- * - Compares adjacent values
- * - Swaps values when required
- * - Repeats passes until sorted
- * - Displays sorted result
+ * - Creates an array of bogie names
+ * - Sorts the array using Arrays.sort()
+ * - Searches for a specific bogie name
+ * - Displays search result
  *
- * This maps algorithmic sorting logic using Bubble Sort.
+ * This maps efficient searching using Binary Search.
  *
  * @author Developer
- * @version 16.0
+ * @version 18.0
  */
 
-public class UseCase16TrainConsistMgmt {
+public class UseCase18TrainConsistMgmt {
 
     public static void main(String[] args) {
 
-        System.out.println("==========================================");
-        System.out.println(" UC16 - Manual Sorting using Bubble Sort ");
-        System.out.println("==========================================\n");
+        System.out.println("==================================================");
+        System.out.println(" UC18 - Search Bogie Name using Binary Search ");
+        System.out.println("==================================================\n");
 
-        // Create array of passenger bogie capacities
-        int[] capacities = {72, 56, 24, 70, 60};
+        // Create array of bogie names
+        String[] bogieNames = {"Sleeper", "AC", "General", "ChairCar", "FirstClass"};
 
-        // Display original order
-        System.out.println("Original Capacities:");
-        for (int c : capacities) {
-            System.out.print(c + " ");
+        // Sort array before binary search
+        Arrays.sort(bogieNames);
+
+        // Display sorted bogie names
+        System.out.println("Sorted Bogie Names:");
+        for (String name : bogieNames) {
+            System.out.print(name + " ");
         }
 
-        // ----- BUBBLE SORT LOGIC -----
-        // Outer loop controls number of passes
-        for (int i = 0; i < capacities.length - 1; i++) {
+        // Bogie name to search
+        String searchName = "AC";
 
-            // Inner loop for comparison
-            for (int j = 0; j < capacities.length - i - 1; j++) {
+        // ----- BINARY SEARCH -----
+        int result = Arrays.binarySearch(bogieNames, searchName);
 
-                // Compare adjacent elements
-                if (capacities[j] > capacities[j + 1]) {
-
-                    // Swap if required
-                    int temp = capacities[j];
-                    capacities[j] = capacities[j + 1];
-                    capacities[j + 1] = temp;
-                }
-            }
-        }
-
-        // Display sorted result
-        System.out.println("\n\nSorted Capacities (Ascending):");
-        for (int c : capacities) {
-            System.out.print(c + " ");
+        // Display result
+        if (result >= 0) {
+            System.out.println("\n\nBogie '" + searchName + "' found at index: " + result);
+        } else {
+            System.out.println("\n\nBogie '" + searchName + "' not found.");
         }
     }
 }
