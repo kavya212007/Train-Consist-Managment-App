@@ -66,6 +66,7 @@ public class TrainConsistManagementApp {
         bogieList.sort(Comparator.comparingInt((Bogie b) -> b.capacity).reversed());
         bogieList.forEach(System.out::println);
 
+
         System.out.println("\n----------------------------------------------");
         System.out.println("Sorting complete. Optimal usage planning enabled.");
     }
